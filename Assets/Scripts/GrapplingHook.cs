@@ -15,12 +15,13 @@ public class GrapplingHook : MonoBehaviour
     bool stopFlying = false;
 
     public bool IsFlying => !stopFlying;
+    public Vector3 TipPosition => hookTip.transform.position;
 
     public void Start()
     {
         rope.transform.parent = player.parent;
-        rope.transform.position = new Vector3(0,0,0);
-        rope.transform.rotation = Quaternion.Euler(0,0,0);
+        rope.transform.position = new Vector3(0, 0, 0);
+        rope.transform.rotation = Quaternion.Euler(0, 0, 0);
         rope.SetPositions(new Vector3[]{
             hookTipMount.position,
             hookTip.position,
@@ -46,29 +47,28 @@ public class GrapplingHook : MonoBehaviour
             if (Vector3.Distance(hookTip.position, hookTipMount.position) > distance)
             {
                 yield return FlyBack(controller);
-                hookTip.parent = hookTipMount;
                 yield break;
             }
         }
 
-        hookTip.parent = hookTipMount;
         controller.GrappleOk();
     }
 
     public IEnumerator FlyBack(PlayerController controller)
     {
         var start = hookTip.position;
-        var finish = hookTipMount.position;
 
         var time = 0f;
         const float TotalTime = 0.2f;
         while (time < TotalTime)
         {
+            var finish = hookTipMount.position;
             hookTip.position = Vector3.Lerp(start, finish, time / TotalTime);
             time += Time.deltaTime;
             yield return null;
         }
-        hookTip.position = finish;
+        hookTip.SetPositionAndRotation(hookTipMount.position, hookTipMount.rotation);
+        hookTip.parent = hookTipMount;
         controller.GrappleFailed();
     }
 
