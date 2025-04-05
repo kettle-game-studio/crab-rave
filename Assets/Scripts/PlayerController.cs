@@ -113,12 +113,14 @@ public class PlayerController : MonoBehaviour
 
     void FreeMovement()
     {
+        var jump = jumpAction.IsPressed() ? 3.0f : 0;
+
         var moveVelocity = moveAction.ReadValue<Vector2>() * moveSpeed;
         var yVelocity = playerBody.linearVelocity.y;
 
         var moveVelocity3d = playerBody.transform.forward * moveVelocity.y
             + playerBody.transform.right * moveVelocity.x
-            + playerBody.transform.up * yVelocity;
+            + playerBody.transform.up * yVelocity + playerBody.transform.up * jump;
 
         playerBody.linearVelocity = Vector3.Lerp(playerBody.linearVelocity, moveVelocity3d, Time.deltaTime);
     }
