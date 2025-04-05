@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public float mouseSpeed = 10f;
     public float moveSpeed = 10f;
+    public float grapplingForce = 10f;
 
     public GameObject verticalPivot;
     public GameObject horizontalPivot;
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
             }
 
             FreeMovement();
+            FreeLook();
         }
         else if (state == State.Grappling)
         {
@@ -82,10 +85,20 @@ public class PlayerController : MonoBehaviour
 
                 return;
             }
+            else if (fireAction.IsPressed())
+            {
+                var thisPosition = playerBody.transform.position;
+                var hookPosition = grapplingHook.TipPosition;
+                playerBody.AddForce((hookPosition - thisPosition).normalized * grapplingForce);
+            }
+            else
+            {
+                FreeLook();
+            }
         }
     }
 
-    void FreeMovement()
+    void FreeLook()
     {
         var lookValue = lookAction.ReadValue<Vector2>();
         var rotationDelta = mouseSpeed * Time.deltaTime * lookValue;
@@ -96,7 +109,10 @@ public class PlayerController : MonoBehaviour
 
         horizontalPivot.transform.localRotation = Quaternion.Euler(0, rotationHorizontal, 0);
         verticalPivot.transform.localRotation = Quaternion.Euler(rotationVertical, 0, 0);
+    }
 
+    void FreeMovement()
+    {
         var moveVelocity = moveAction.ReadValue<Vector2>() * moveSpeed;
         var yVelocity = playerBody.linearVelocity.y;
 
@@ -104,6 +120,6 @@ public class PlayerController : MonoBehaviour
             + playerBody.transform.right * moveVelocity.x
             + playerBody.transform.up * yVelocity;
 
-        playerBody.linearVelocity = moveVelocity3d;
+        playerBody.linearVelocity = Vector3.Lerp(playerBody.linearVelocity, moveVelocity3d, Time.deltaTime);
     }
 }
