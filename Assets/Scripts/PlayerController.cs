@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,12 +12,37 @@ public class PlayerController : MonoBehaviour
     public GameObject horizontalPivot;
     public Rigidbody playerBody;
 
+    public GrapplingHook grapplingHook;
+
     InputAction jumpAction;
     InputAction lookAction;
     InputAction moveAction;
+    InputAction fireAction;
+    InputAction unfireAction;
 
     float rotationHorizontal;
     float rotationVertical;
+
+    enum State
+    {
+        Free,
+        Firing,
+        Grappling,
+    }
+
+    State state = State.Free;
+
+    public void GrappleOk()
+    {
+        state = State.Grappling;
+        Debug.Log($"{state}");
+    }
+
+    public void GrappleFailed()
+    {
+        state = State.Free;
+        Debug.Log($"{state}");
+    }
 
     void Start()
     {
@@ -23,12 +50,42 @@ public class PlayerController : MonoBehaviour
         lookAction = InputSystem.actions.FindAction("Look");
         jumpAction = InputSystem.actions.FindAction("Jump");
         moveAction = InputSystem.actions.FindAction("Move");
+        fireAction = InputSystem.actions.FindAction("Attack");
+        unfireAction = InputSystem.actions.FindAction("UnAttack");
 
         rotationVertical = verticalPivot.transform.eulerAngles.x;
         rotationHorizontal = horizontalPivot.transform.eulerAngles.y;
     }
 
     void Update()
+    {
+        if (state == State.Free)
+        {
+            if (fireAction.IsPressed())
+            {
+                state = State.Firing;
+                StartCoroutine(grapplingHook.FlyForward(this));
+                Debug.Log($"{state}");
+
+                return;
+            }
+
+            FreeMovement();
+        }
+        else if (state == State.Grappling)
+        {
+            if (unfireAction.IsPressed())
+            {
+                state = State.Firing;
+                StartCoroutine(grapplingHook.FlyBack(this));
+                Debug.Log($"{state}");
+
+                return;
+            }
+        }
+    }
+
+    void FreeMovement()
     {
         var lookValue = lookAction.ReadValue<Vector2>();
         var rotationDelta = mouseSpeed * Time.deltaTime * lookValue;
