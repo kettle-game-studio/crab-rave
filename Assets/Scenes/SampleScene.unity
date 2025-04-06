@@ -899,6 +899,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4777120742497880101, guid: 716334ea293b53df485cf15239550fdd, type: 3}
   m_PrefabInstance: {fileID: 1027369546}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &237941209 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 408ecd21c5f786a4bb1a60343583c2df, type: 3}
+  m_PrefabInstance: {fileID: 859499407}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &244702958
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1972,6 +1977,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1809734685980524203, guid: e4262fa3f5a91f558acfa6045122a0b3, type: 3}
+      propertyPath: worldRopeMount
+      value: 
+      objectReference: {fileID: 237941209}
     - target: {fileID: 3345150429472418686, guid: e4262fa3f5a91f558acfa6045122a0b3, type: 3}
       propertyPath: m_ClearFlags
       value: 2

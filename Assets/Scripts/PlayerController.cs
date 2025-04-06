@@ -37,13 +37,13 @@ public class PlayerController : MonoBehaviour
     public void GrappleOk()
     {
         state = State.Grappling;
-        Debug.Log($"{state}");
+        // Debug.Log($"{state}");
     }
 
     public void GrappleFailed()
     {
         state = State.Free;
-        Debug.Log($"{state}");
+        // Debug.Log($"{state}");
     }
 
     void Start()
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
             {
                 state = State.Firing;
                 StartCoroutine(grapplingHook.FlyBack(this));
-                Debug.Log($"{state}");
+                // Debug.Log($"{state}");
 
                 return;
             }
