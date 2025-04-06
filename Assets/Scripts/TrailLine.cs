@@ -13,9 +13,11 @@ public class TrailLine : MonoBehaviour
     public bool moveBackFlag = false;
 
     List<Vector3> positions;
+    int layerMask;
 
     void Start()
     {
+        layerMask = 1 << LayerMask.NameToLayer("Default");
         rope.transform.parent = player.parent;
         rope.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 
@@ -39,7 +41,7 @@ public class TrailLine : MonoBehaviour
             var preLastPos = positions[positions.Count - 2];
             if (Vector3.Distance(preLastPos, currentPos) <= segmentDistance)
             {
-                Debug.Log($"Remove point");
+                // Debug.Log($"Remove point");
                 positions.RemoveAt(positions.Count - 1);
                 positions[^1] = currentPos;
 
@@ -52,7 +54,7 @@ public class TrailLine : MonoBehaviour
         if (!moveBackFlag && Vector3.Distance(lastPos, currentPos) > segmentDistance)
         {
             positions.Add(currentPos);
-            Debug.Log($"Add point {currentPos} ({positions.Count})");
+            // Debug.Log($"Add point {currentPos} ({positions.Count})");
             rope.positionCount = positions.Count;
             rope.SetPositions(positions.ToArray());
         }
@@ -87,10 +89,10 @@ public class TrailLine : MonoBehaviour
 
             vm = Mathf.Min(shrinkSpeed * Time.deltaTime, vmm) * (v0 + v1).normalized;
 
-            var ray0 = Physics.Raycast(p1, v0, v0.magnitude);
+            var ray0 = Physics.Raycast(p1, v0, v0.magnitude, layerMask);
             if (ray0) continue;
 
-            var ray1 = Physics.Raycast(p1, v1, v1.magnitude);
+            var ray1 = Physics.Raycast(p1, v1, v1.magnitude, layerMask);
             if (ray1) continue;
 
             positions[i - 1] += vm;
@@ -109,7 +111,10 @@ public class TrailLine : MonoBehaviour
 
             if (Vector3.Distance(pPrev, p) < segmentDistance * 0.5f)
             {
-                continue;
+                var v = pPrev - p;
+                var ray0 = Physics.Raycast(p, v, v.magnitude, layerMask);
+                if (ray0)
+                    continue;
             }
 
             newPositions.Add(p);

@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     float rotationHorizontal;
     float rotationVertical;
+    int worldBoundLayerMask;
 
     enum State
     {
@@ -69,6 +70,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        worldBoundLayerMask = 1 << LayerMask.NameToLayer("WorldBounds");
+
         Cursor.lockState = CursorLockMode.Locked;
         lookAction = InputSystem.actions.FindAction("Look");
         jumpAction = InputSystem.actions.FindAction("Jump");
@@ -176,5 +179,13 @@ public class PlayerController : MonoBehaviour
         var speed = playerBody.linearVelocity.magnitude;
         var direction = playerBody.linearVelocity.normalized;
         playerBody.linearVelocity = direction * Mathf.Min(speed, 5);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if ((worldBoundLayerMask | collision.collider.gameObject.layer) == 0)
+            return;
+
+            Debug.Log("Can't");
     }
 }

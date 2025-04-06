@@ -74,7 +74,7 @@ public class GrapplingHook : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Trigger enter {other.gameObject.name}");
+        // Debug.Log($"Trigger enter {other.gameObject.name}");
         stopFlying = true;
     }
 }
