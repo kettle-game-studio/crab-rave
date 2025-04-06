@@ -7,7 +7,10 @@ public class TrailLine : MonoBehaviour
     public Transform playerRopeMount;
     public Transform worldRopeMount;
     public LineRenderer rope;
-    public float segmentDistance = 2f;
+    public float segmentDistance = 0.5f;
+    public float shrinkSpeed = 1f;
+
+    public bool moveBackFlag = false;
 
     List<Vector3> positions;
 
@@ -26,14 +29,31 @@ public class TrailLine : MonoBehaviour
 
     void Update()
     {
+        RopeGarbageCollector();
+
         var lastPos = positions[positions.Count - 2];
         var currentPos = playerRopeMount.position;
 
-        positions[^1] = currentPos;
-        if (Vector3.Distance(lastPos, currentPos) > segmentDistance)
+        if (moveBackFlag && positions.Count > 2)
         {
-            Debug.Log("Add point");
+            var preLastPos = positions[positions.Count - 2];
+            if (Vector3.Distance(preLastPos, currentPos) <= segmentDistance)
+            {
+                Debug.Log($"Remove point");
+                positions.RemoveAt(positions.Count - 1);
+                positions[^1] = currentPos;
+
+                rope.positionCount = positions.Count;
+                rope.SetPositions(positions.ToArray());
+            }
+        }
+
+        positions[^1] = currentPos;
+        if (!moveBackFlag && Vector3.Distance(lastPos, currentPos) > segmentDistance)
+        {
             positions.Add(currentPos);
+            Debug.Log($"Add point {currentPos} ({positions.Count})");
+            rope.positionCount = positions.Count;
             rope.SetPositions(positions.ToArray());
         }
         else
@@ -41,5 +61,72 @@ public class TrailLine : MonoBehaviour
             // rope.SetPosition(rope.positionCount - 1, currentPos);
             rope.SetPositions(positions.ToArray());
         }
+    }
+
+    int countFrames = 0;
+    void RopeGarbageCollector()
+    {
+        countFrames++;
+        if (positions.Count < 3)
+        {
+            return;
+        }
+
+        for (var i = 2; i < positions.Count; i++)
+        {
+            var p0 = positions[i - 2];
+            var p1 = positions[i - 1];
+            var p2 = positions[i - 0];
+
+            var v0 = p0 - p1;
+            var v1 = p2 - p1;
+            var vm = (v0 + v1) * 0.5f;
+            var vmm = vm.magnitude;
+            if (vmm < 0.01f)
+                continue;
+
+            vm = Mathf.Min(shrinkSpeed * Time.deltaTime, vmm) * (v0 + v1).normalized;
+
+            var ray0 = Physics.Raycast(p1, v0, v0.magnitude);
+            if (ray0) continue;
+
+            var ray1 = Physics.Raycast(p1, v1, v1.magnitude);
+            if (ray1) continue;
+
+            positions[i - 1] += vm;
+        }
+
+        if (countFrames < 10) return;
+        countFrames = 0;
+
+        var newPositions = new List<Vector3>();
+        var pPrev = positions[0];
+
+        newPositions.Add(pPrev);
+        for (var i = 1; i < positions.Count - 1; i++)
+        {
+            var p = positions[i];
+
+            if (Vector3.Distance(pPrev, p) < segmentDistance * 0.5f)
+            {
+                continue;
+            }
+
+            newPositions.Add(p);
+            pPrev = p;
+        }
+        newPositions.Add(positions[^1]);
+
+        positions = newPositions;
+        rope.positionCount = positions.Count;
+        rope.SetPositions(positions.ToArray());
+    }
+
+    public Vector3 RollBackDirection()
+    {
+        var lastPos = positions[positions.Count - 2];
+        var currentPos = playerRopeMount.position;
+
+        return (lastPos - currentPos).normalized;
     }
 }
