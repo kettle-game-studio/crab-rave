@@ -5753,6 +5753,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 033232c72fdfb8740b71988e5bc9ce2c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 62cfe549b1d86678ea24913120d4afe3, type: 2}
     - target: {fileID: 919132149155446097, guid: 033232c72fdfb8740b71988e5bc9ce2c, type: 3}
       propertyPath: m_Name
       value: hook

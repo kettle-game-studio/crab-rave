@@ -89,7 +89,10 @@ public class PlayerController : MonoBehaviour
             {
                 var thisPosition = playerBody.transform.position;
                 var hookPosition = grapplingHook.TipPosition;
-                playerBody.AddForce((hookPosition - thisPosition).normalized * grapplingForce);
+
+                var additionalForce = (thisPosition.y < hookPosition.y ? Vector3.up : -Vector3.up) * 5; 
+                
+                playerBody.AddForce((hookPosition - thisPosition).normalized * grapplingForce + additionalForce);
             }
             else
             {
