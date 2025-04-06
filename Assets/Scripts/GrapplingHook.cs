@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Linq;
-using UnityEditor.UI;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
