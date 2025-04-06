@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
             + playerBody.transform.right * moveVelocity.x
             + playerBody.transform.up * yVelocity + playerBody.transform.up * jump;
 
-        playerBody.linearVelocity = Vector3.Lerp(playerBody.linearVelocity, moveVelocity3d, Mathf.Clamp(Time.deltaTime * 2, 0, 1));
+        playerBody.linearVelocity = Vector3.Lerp(playerBody.linearVelocity, moveVelocity3d, Mathf.Clamp(Time.deltaTime * 5, 0, 1));
         var speed = playerBody.linearVelocity.magnitude;
         var direction = playerBody.linearVelocity.normalized;
         playerBody.linearVelocity = direction * Mathf.Min(speed, 5);
