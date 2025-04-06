@@ -5490,7 +5490,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8133086107932771861}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 66283c76441fc67c7a1d6ebce449b455, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5524,7 +5524,9 @@ MonoBehaviour:
   verticalPivot: {fileID: 9072233423922876090}
   horizontalPivot: {fileID: 8133086107932771861}
   playerBody: {fileID: 6508804177134184}
+  playerCollider: {fileID: 6938255860275277029}
   grapplingHook: {fileID: 3614297100893531894}
+  trailLine: {fileID: 1809734685980524203}
 --- !u!54 &6508804177134184
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5569,6 +5571,8 @@ MonoBehaviour:
   worldRopeMount: {fileID: 0}
   rope: {fileID: 3839750612239036814}
   segmentDistance: 2
+  shrinkSpeed: 50
+  moveBackFlag: 0
 --- !u!1 &8731895047165745642
 GameObject:
   m_ObjectHideFlags: 0
