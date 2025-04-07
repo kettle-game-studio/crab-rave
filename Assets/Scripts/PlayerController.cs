@@ -248,8 +248,8 @@ public class PlayerController : MonoBehaviour
         state = State.Free;
     }
 
-    public void GetShell()
+    public void GetShell(Shell.ShellType shellType)
     {
-        Debug.Log("Player.GetShell()");
+        Debug.Log($"Player.GetShell({shellType})");
     }
 }
