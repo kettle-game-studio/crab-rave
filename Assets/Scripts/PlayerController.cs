@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     InputAction fireAction;
     InputAction unfireAction;
+    InputAction escapeAction;
 
     float rotationHorizontal;
     float rotationVertical;
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
         moveAction = InputSystem.actions.FindAction("Move");
         fireAction = InputSystem.actions.FindAction("Attack");
         unfireAction = InputSystem.actions.FindAction("UnAttack");
+        escapeAction = InputSystem.actions.FindAction("Escape");
 
         rotationVertical = verticalPivot.transform.eulerAngles.x;
         rotationHorizontal = horizontalPivot.transform.eulerAngles.y;
@@ -90,6 +92,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (escapeAction.IsPressed())
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (Cursor.lockState != CursorLockMode.Locked && !escapeAction.IsPressed())
+        {
+            if (fireAction.IsPressed() || unfireAction.IsPressed())
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            return;
+        }
+
         if (state == State.Free)
         {
             trailLine.moveBackFlag = unfireAction.IsPressed();
@@ -152,6 +168,10 @@ public class PlayerController : MonoBehaviour
 
     void FreeLook()
     {
+        Debug.Log($"Cursor.lockState = {Cursor.lockState}");
+        if (Cursor.lockState != CursorLockMode.Locked)
+            return;
+
         var lookValue = lookAction.ReadValue<Vector2>();
         var rotationDelta = mouseSpeed * Time.deltaTime * lookValue;
 
