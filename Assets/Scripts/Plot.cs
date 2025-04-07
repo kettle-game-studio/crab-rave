@@ -114,12 +114,6 @@ public class Plot : MonoBehaviour
 
     void Update()
     {
-
-        if (playerController.unjumpAction.IsPressed())
-        {
-            credits.StartCredits();
-        }
-
         if (hitWall)
         {
             hitWall = false;
@@ -220,5 +214,9 @@ public class Plot : MonoBehaviour
         }
 
         CrabSays("Kkkk! You've found all the shells, you lucky bastard", 5);
+
+        yield return new WaitForSeconds(5f);
+
+        credits.StartCredits();
     }
 }

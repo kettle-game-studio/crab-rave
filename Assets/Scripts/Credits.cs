@@ -55,23 +55,23 @@ public class Credits : MonoBehaviour
 
         You have swum:
         
-        - {(int)playerController.movedWithWasd} meters with your crab-legs;
-        - {(int)playerController.movedWithHook} meters with your grappling hook;
-        - {(int)playerController.movedWithBack} meters rewinding the air hose;
+        {(int)playerController.movedWithWasd} meters with your crab-legs;
+        {(int)playerController.movedWithHook} meters with your grappling hook;
+        {(int)playerController.movedWithBack} meters rewinding the air hose;
 
         You have collected:
 
-        - {plot.shells}/{plot.totalShells} Shells;
-        - {plot.gems}/{plot.totalGems} Gems;
+        {plot.shells}/{plot.totalShells} Shells;
+        {plot.gems}/{plot.totalGems} Gems;
 
         CREDITS:
 
-        - Oleg Arutyunov
-        - Nicole Akopdzhanova
-        - Sergey Duyunov
-        - Viacheslav Ivanchenko
-        - Adam Arutyunov
-        - Tigran Mamedov
+        Oleg Arutyunov
+        Nicole Akopdzhanova
+        Sergey Duyunov
+        Viacheslav Ivanchenko
+        Adam Arutyunov
+        Tigran Mamedov
         ";
     }
 }
