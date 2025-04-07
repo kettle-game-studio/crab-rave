@@ -5203,6 +5203,7 @@ MonoBehaviour:
   distance: 30
   rope: {fileID: 1299288933818653188}
   hookBubbles: {fileID: 7736409603921285332}
+  hookCollider: {fileID: 7636001593724972205}
   catchAudio: {fileID: 5562562249930540928}
   wroomAudio: {fileID: 5748296390018502150}
   fireAudio: {fileID: 6036318663210369764}

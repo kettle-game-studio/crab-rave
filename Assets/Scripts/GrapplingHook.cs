@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
-    public Transform player;
+    public PlayerController player;
     public Transform hookTip;
     public Transform hookTipMount;
     public float speed;
     public float distance = 30;
     public LineRenderer rope;
     public ParticleSystem hookBubbles;
+    public Collider hookCollider;
 
-    bool stopFlying = false;
+    bool stopFlying = true;
     Shell shell;
 
     public bool IsFlying => !stopFlying;
@@ -23,7 +24,8 @@ public class GrapplingHook : MonoBehaviour
 
     public void Start()
     {
-        rope.transform.parent = player.parent;
+        hookCollider.enabled = false;
+        rope.transform.parent = player.transform.parent;
         rope.transform.position = new Vector3(0, 0, 0);
         rope.transform.rotation = Quaternion.Euler(0, 0, 0);
         rope.SetPositions(new Vector3[]{
@@ -41,8 +43,9 @@ public class GrapplingHook : MonoBehaviour
     public IEnumerator FlyForward(PlayerController controller)
     {
         stopFlying = false;
-        hookTip.parent = player.parent;
+        hookTip.parent = player.transform.parent;
         hookBubbles.Play();
+        hookCollider.enabled = true;
         fireAudio.Play();
 
         while (!stopFlying)
@@ -54,6 +57,8 @@ public class GrapplingHook : MonoBehaviour
             {
                 fireAudio.Stop();
                 hookBubbles.Stop();
+                stopFlying = true;
+                hookCollider.enabled = false;
                 yield return FlyBack(controller);
                 yield break;
             }
@@ -62,6 +67,7 @@ public class GrapplingHook : MonoBehaviour
         catchAudio.Play();
         hookBubbles.Stop();
         controller.GrappleOk();
+        hookCollider.enabled = false;
     }
 
     public IEnumerator FlyBack(PlayerController controller, float totalTime = 0.2f)
@@ -89,6 +95,7 @@ public class GrapplingHook : MonoBehaviour
         // hookBubbles.Stop();
         if (shell != null)
         {
+            player.GetShell(shell.@type);
             shell.GetRetrieved();
         }
         controller.GrappleFailed();
@@ -96,8 +103,11 @@ public class GrapplingHook : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        var shell = other.GetComponent<Shell>();
-        if (shell == null)
+        // Debug.Log($"OnTriggerEnter.IsFlying {IsFlying}");
+        if (!IsFlying)
+            return;
+
+        if (!other.TryGetComponent<Shell>(out var shell))
         {
             stopFlying = true;
             return;
@@ -105,6 +115,6 @@ public class GrapplingHook : MonoBehaviour
 
         catchAudio.Play();
         this.shell = shell;
-        shell.GetGrabbed(hookTip, player.GetComponent<PlayerController>());
+        shell.GetGrabbed(hookTip);
     }
 }

@@ -5,9 +5,16 @@ public class Shell : MonoBehaviour
     public Transform shell;
     public Collider shellCollider;
 
+    public enum ShellType
+    {
+        Shell,
+        Gem,
+    }
+    public ShellType @type;
+
     Vector3 startPosition;
     float time;
-    PlayerController player;
+    bool grabbed;
 
     void Start()
     {
@@ -16,7 +23,7 @@ public class Shell : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
+        if (grabbed)
         {
             return;
         }
@@ -26,16 +33,15 @@ public class Shell : MonoBehaviour
         shell.Rotate(new Vector3(0, Time.deltaTime * 50, 0));
     }
 
-    public void GetGrabbed(Transform transform, PlayerController player)
+    public void GetGrabbed(Transform transform)
     {
-        this.player = player;
+        grabbed = true;
         this.transform.parent = transform;
         shellCollider.enabled = false;
     }
 
     public void GetRetrieved()
     {
-        player.GetShell();
         Destroy(this.gameObject);
     }
 }
