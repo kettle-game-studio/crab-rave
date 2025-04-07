@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
@@ -9,8 +10,10 @@ public class GrapplingHook : MonoBehaviour
     public float speed;
     public float distance = 30;
     public LineRenderer rope;
+    public ParticleSystem hookBubbles;
 
     bool stopFlying = false;
+    Shell shell;
 
     public bool IsFlying => !stopFlying;
     public Vector3 TipPosition => hookTip.transform.position;
@@ -38,25 +41,34 @@ public class GrapplingHook : MonoBehaviour
     {
         stopFlying = false;
         hookTip.parent = player.parent;
+        hookBubbles.Play();
+
         while (!stopFlying)
         {
             hookTip.position += speed * Time.deltaTime * hookTip.forward;
             yield return null;
 
-            if (Vector3.Distance(hookTip.position, hookTipMount.position) > distance)
+            if (Vector3.Distance(hookTip.position, hookTipMount.position) > distance || shell != null)
             {
+                hookBubbles.Stop();
                 yield return FlyBack(controller);
                 wroomAudio.Stop();
                 yield break;
             }
         }
         catchAudio.Play();
+        hookBubbles.Stop();
         controller.GrappleOk();
     }
 
     public IEnumerator FlyBack(PlayerController controller, float totalTime = 0.2f)
     {
         var start = hookTip.position;
+        // hookBubbles.Play();
+
+        if (shell != null){
+            totalTime = 0.5f;
+        }
 
         wroomAudio.Play();
         var time = 0f;
@@ -70,12 +82,23 @@ public class GrapplingHook : MonoBehaviour
         wroomAudio.Stop();
         hookTip.SetPositionAndRotation(hookTipMount.position, hookTipMount.rotation);
         hookTip.parent = hookTipMount;
+        // hookBubbles.Stop();
+        if (shell != null){
+            shell.GetRetrieved();
+        }
         controller.GrappleFailed();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Debug.Log($"Trigger enter {other.gameObject.name}");
-        stopFlying = true;
+        var shell = other.GetComponent<Shell>();
+        if (shell == null)
+        {
+            stopFlying = true;
+            return;
+        }
+
+        this.shell = shell;
+        shell.GetGrabbed(hookTip, player.GetComponent<PlayerController>());
     }
 }

@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
     void FreeLook()
     {
-        Debug.Log($"Cursor.lockState = {Cursor.lockState}");
+        // Debug.Log($"Cursor.lockState = {Cursor.lockState}");
         if (Cursor.lockState != CursorLockMode.Locked)
             return;
 
@@ -246,5 +246,10 @@ public class PlayerController : MonoBehaviour
 
         trailLine.moveBackFlag = false;
         state = State.Free;
+    }
+
+    public void GetShell()
+    {
+        Debug.Log("Player.GetShell()");
     }
 }
