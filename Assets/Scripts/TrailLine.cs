@@ -41,19 +41,12 @@ public class TrailLine : MonoBehaviour
             var preLastPos = positions[positions.Count - 2];
             if (Vector3.Distance(preLastPos, currentPos) <= segmentDistance)
             {
+                // Debug.Log($"Remove point");
+                positions.RemoveAt(positions.Count - 1);
+                positions[^1] = currentPos;
 
-                var v = preLastPos - currentPos;
-                var ray0 = Physics.Raycast(currentPos, v, v.magnitude, layerMask);
-                Debug.DrawRay(currentPos, v);
-                if (!ray0)
-                {
-                    // Debug.Log($"Remove point");
-                    positions.RemoveAt(positions.Count - 1);
-                    positions[^1] = currentPos;
-
-                    rope.positionCount = positions.Count;
-                    rope.SetPositions(positions.ToArray());
-                }
+                rope.positionCount = positions.Count;
+                rope.SetPositions(positions.ToArray());
             }
         }
 

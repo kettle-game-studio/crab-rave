@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Mono.Cecil.Cil;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Plot : MonoBehaviour
 {
@@ -12,11 +14,26 @@ public class Plot : MonoBehaviour
     public TextMeshProUGUI shellText;
     public TextMeshProUGUI crabText;
     public TextMeshProUGUI questText;
+    public Credits credits;
+    public int shells = 0;
+    public int gems = 0;
 
-    public int totalShells = 4;
+    public int totalShells;
+    public int totalGems;
 
-    int shells = 0;
-    int gems = 0;
+    public void RemoveText()
+    {
+        shellText.enabled = false;
+        crabText.enabled = false;
+        questText.enabled = false;
+    }
+
+    public void ReturnText()
+    {
+        shellText.enabled = true;
+        crabText.enabled = true;
+        questText.enabled = true;
+    }
 
     public void ShellCollected(Shell.ShellType shellType)
     {
@@ -33,7 +50,7 @@ public class Plot : MonoBehaviour
 
     void SetShellText()
     {
-        shellText.text = $"Shells: {shells}\nGems: {gems}";
+        shellText.text = $"Shells: {shells}/{totalShells}\nGems: {gems}/{totalGems}";
     }
 
     List<(string, float, float)> crabSays = new List<(string, float, float)>();
@@ -79,18 +96,36 @@ public class Plot : MonoBehaviour
 
     void Start()
     {
+        foreach (var shell in UnityEngine.Object.FindObjectsByType<Shell>(FindObjectsSortMode.None))
+        {
+            if (shell.type == Shell.ShellType.Shell)
+            {
+                totalShells += 1;
+            }
+            else
+            {
+                totalGems += 1;
+            }
+        }
+
         SetShellText();
         StartCoroutine(PlotCoroutine());
     }
 
     void Update()
     {
+
+        if (playerController.unjumpAction.IsPressed())
+        {
+            credits.StartCredits();
+        }
+
         if (hitWall)
         {
             hitWall = false;
             CrabSays("No rope left, mate, pulling you out.", 2f);
         }
-        
+
         UpdateQuestTest();
         for (var i = 0; i < crabSays.Count;)
         {
