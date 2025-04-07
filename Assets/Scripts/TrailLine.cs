@@ -41,12 +41,19 @@ public class TrailLine : MonoBehaviour
             var preLastPos = positions[positions.Count - 2];
             if (Vector3.Distance(preLastPos, currentPos) <= segmentDistance)
             {
-                // Debug.Log($"Remove point");
-                positions.RemoveAt(positions.Count - 1);
-                positions[^1] = currentPos;
 
-                rope.positionCount = positions.Count;
-                rope.SetPositions(positions.ToArray());
+                var v = preLastPos - currentPos;
+                var ray0 = Physics.Raycast(currentPos, v, v.magnitude, layerMask);
+                Debug.DrawRay(currentPos, v);
+                if (!ray0)
+                {
+                    // Debug.Log($"Remove point");
+                    positions.RemoveAt(positions.Count - 1);
+                    positions[^1] = currentPos;
+
+                    rope.positionCount = positions.Count;
+                    rope.SetPositions(positions.ToArray());
+                }
             }
         }
 
@@ -87,8 +94,10 @@ public class TrailLine : MonoBehaviour
             vm = Mathf.Min(shrinkSpeed * Time.deltaTime, vmm) * (v0 + v1).normalized;
 
             var ray0 = Physics.Raycast(p1, v0, v0.magnitude, layerMask);
+            Debug.DrawRay(p1, v0);
             if (ray0) continue;
 
+            Debug.DrawRay(p1, v1);
             var ray1 = Physics.Raycast(p1, v1, v1.magnitude, layerMask);
             if (ray1) continue;
 
@@ -110,6 +119,7 @@ public class TrailLine : MonoBehaviour
             if (Vector3.Distance(pPrev, p) < segmentDistance * 0.5f)
             {
                 var v = pPrev - p;
+                Debug.DrawRay(p, v);
                 var ray0 = Physics.Raycast(p, v, v.magnitude, layerMask);
                 if (ray0)
                     continue;

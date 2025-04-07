@@ -10474,8 +10474,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSpeed: 10
-  moveSpeed: 10
-  grapplingForce: 10
+  moveSpeed: 5
+  grapplingForce: 50
+  maxSpeed: 3
   verticalPivot: {fileID: 9072233423922876090}
   horizontalPivot: {fileID: 8133086107932771861}
   playerBody: {fileID: 6508804177134184}

@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public float mouseSpeed = 10f;
     public float moveSpeed = 10f;
     public float grapplingForce = 10f;
+    public float maxSpeed = 3f;
 
     public GameObject verticalPivot;
     public GameObject horizontalPivot;
@@ -241,7 +239,7 @@ public class PlayerController : MonoBehaviour
         playerBody.linearVelocity = Vector3.Lerp(playerBody.linearVelocity, moveVelocity3d * moveSpeed, Mathf.Clamp(Time.deltaTime * 5, 0, 1));
         var speed = playerBody.linearVelocity.magnitude;
         var direction = playerBody.linearVelocity.normalized;
-        playerBody.linearVelocity = direction * Mathf.Min(speed, 5);
+        playerBody.linearVelocity = direction * Mathf.Min(speed, maxSpeed);
         if (speed > 0.4f)
             animator.SetBool("IsMoving", true);
         else
@@ -264,6 +262,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"Cant due to {collision.collider.gameObject.name} ({collision.collider.gameObject.layer}), worldBoundLayerMask = {worldBoundLayerMask}, ");
         StartCoroutine(WorldEndCoroutine());
+        plot.HitWall();
     }
 
     IEnumerator WorldEndCoroutine()
