@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 253581097020488547}
   - component: {fileID: 2431215035236674480}
   - component: {fileID: 7831411794314581499}
+  - component: {fileID: 7333753020074734346}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -100,3 +101,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 2431215035236674480}
+  color1range1: 1
+  color1range2: 1
+  color2range1: 1
+  color2range2: 1
+  color3range1: 1
+  color3range2: 1
+--- !u!65 &7333753020074734346
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115689736729672466}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.3909826, y: 3.5352144, z: 5.185113}
+  m_Center: {x: -0.63576436, y: 1.4950857, z: 0.19668865}
