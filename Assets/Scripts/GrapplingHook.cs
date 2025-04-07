@@ -52,16 +52,15 @@ public class GrapplingHook : MonoBehaviour
         controller.GrappleOk();
     }
 
-    public IEnumerator FlyBack(PlayerController controller)
+    public IEnumerator FlyBack(PlayerController controller, float totalTime = 0.2f)
     {
         var start = hookTip.position;
 
         var time = 0f;
-        const float TotalTime = 0.2f;
-        while (time < TotalTime)
+        while (time < totalTime)
         {
             var finish = hookTipMount.position;
-            hookTip.position = Vector3.Lerp(start, finish, time / TotalTime);
+            hookTip.position = Vector3.Lerp(start, finish, time / totalTime);
             time += Time.deltaTime;
             yield return null;
         }

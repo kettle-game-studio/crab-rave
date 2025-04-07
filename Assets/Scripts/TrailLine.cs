@@ -57,18 +57,16 @@ public class TrailLine : MonoBehaviour
             // Debug.Log($"Add point {currentPos} ({positions.Count})");
             rope.positionCount = positions.Count;
             rope.SetPositions(positions.ToArray());
+            return;
         }
-        else
-        {
-            // rope.SetPosition(rope.positionCount - 1, currentPos);
-            rope.SetPositions(positions.ToArray());
-        }
+
+        rope.SetPosition(rope.positionCount - 1, currentPos);
     }
 
     int countFrames = 0;
     void RopeGarbageCollector()
     {
-        countFrames++;
+        // countFrames++;
         if (positions.Count < 3)
         {
             return;
@@ -98,8 +96,8 @@ public class TrailLine : MonoBehaviour
             positions[i - 1] += vm;
         }
 
-        if (countFrames < 10) return;
-        countFrames = 0;
+        // if (countFrames < 10) return;
+        // countFrames = 0;
 
         var newPositions = new List<Vector3>();
         var pPrev = positions[0];

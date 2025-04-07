@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Stuff Material 2
+  m_Name: StuffWorldBound
   m_Shader: {fileID: -6465566751694194690, guid: bd175caf45baf6b8f9d7075eff401249, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -130,10 +130,10 @@ Material:
     - _AlbedoTint: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.38679248, g: 0.0018244971, b: 0.32827827, a: 1}
     - _Color: {r: 0.38679245, g: 0.0018244971, b: 0.32827824, a: 1}
-    - _ColorTint: {r: 0.0586306, g: 0.6037736, b: 0, a: 0}
+    - _ColorTint: {r: 0.6039216, g: 0, b: 0.5336633, a: 0}
     - _EmissionColor: {r: 20.950558, g: 4.3696394, b: 4.0517583, a: 1}
     - _EmissionTint: {r: 0, g: 0, b: 0, a: 0}
-    - _LightTint: {r: 0, g: 45.065018, b: 47.937252, a: 0}
+    - _LightTint: {r: 35.488693, g: 0.8510979, b: 1.2165418, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Wind0: {r: 0.1, g: 0, b: 0, a: 0}
     - _Wind1: {r: 1, g: 0, b: 0, a: 0}
