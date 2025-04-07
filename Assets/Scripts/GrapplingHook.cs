@@ -20,6 +20,7 @@ public class GrapplingHook : MonoBehaviour
     public Vector3 TipPosition => hookTip.transform.position;
     public AudioSource catchAudio;
     public AudioSource wroomAudio;
+    public AudioSource fireAudio;
 
     public void Start()
     {
@@ -45,6 +46,7 @@ public class GrapplingHook : MonoBehaviour
         hookTip.parent = player.transform.parent;
         hookBubbles.Play();
         hookCollider.enabled = true;
+        fireAudio.Play();
 
         while (!stopFlying)
         {
@@ -53,14 +55,15 @@ public class GrapplingHook : MonoBehaviour
 
             if (Vector3.Distance(hookTip.position, hookTipMount.position) > distance || shell != null)
             {
+                fireAudio.Stop();
                 hookBubbles.Stop();
                 stopFlying = true;
                 hookCollider.enabled = false;
                 yield return FlyBack(controller);
-                wroomAudio.Stop();
                 yield break;
             }
         }
+        fireAudio.Stop();
         catchAudio.Play();
         hookBubbles.Stop();
         controller.GrappleOk();

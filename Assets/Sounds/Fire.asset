@@ -1,23 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1233149941 &-399889449357723034
+--- !u!1233149941 &-8328691704002071051
 AudioContainerElement:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Wrooom01_{-399889449357723034}
-  m_AudioClip: {fileID: 8300000, guid: b823b8bdc26aa5a449b2ade569fcae75, type: 3}
+  m_Name: Open01_{-8328691704002071051}
+  m_AudioClip: {fileID: 8300000, guid: 81a9fa7c31685a24a8aaa6ad04f727e8, type: 3}
   m_Volume: 0
   m_Enabled: 1
---- !u!1233149941 &5130682190403974090
+--- !u!1233149941 &-6649183774223198834
 AudioContainerElement:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WrooomLow_{5130682190403974090}
-  m_AudioClip: {fileID: 8300000, guid: 0625e165935d7484a879adfd8485d3b8, type: 3}
+  m_Name: Open03_{-6649183774223198834}
+  m_AudioClip: {fileID: 8300000, guid: 854cef8c4226f6941b16d08dec4de36e, type: 3}
   m_Volume: 0
   m_Enabled: 1
 --- !u!1307931743 &6418180475301049370
@@ -26,7 +26,7 @@ AudioRandomContainer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Wroom
+  m_Name: Fire
   m_Volume: 0
   m_Pitch: 0
   m_AutomaticTriggerTime: 0
@@ -36,8 +36,9 @@ AudioRandomContainer:
   m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
   m_LoopCountRandomizationRange: {x: 0, y: 0}
   m_Elements:
-  - {fileID: -399889449357723034}
-  - {fileID: 5130682190403974090}
+  - {fileID: -8328691704002071051}
+  - {fileID: 8861455077097838052}
+  - {fileID: -6649183774223198834}
   m_AvoidRepeatingLast: 0
   m_PlaybackMode: 0
   m_TriggerMode: 0
@@ -47,3 +48,13 @@ AudioRandomContainer:
   m_PitchRandomizationEnabled: 0
   m_AutomaticTriggerTimeRandomizationEnabled: 0
   m_LoopCountRandomizationEnabled: 0
+--- !u!1233149941 &8861455077097838052
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Open02_{8861455077097838052}
+  m_AudioClip: {fileID: 8300000, guid: 1b61a4b23e4a9b349844ee3cb325e403, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
