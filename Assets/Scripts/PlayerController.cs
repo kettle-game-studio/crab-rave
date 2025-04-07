@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public TrailLine trailLine;
 
     InputAction jumpAction;
+    InputAction unjumpAction;
     InputAction lookAction;
     InputAction moveAction;
     InputAction fireAction;
@@ -72,11 +73,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         worldBoundLayerMask = 1 << LayerMask.NameToLayer("WorldBounds");
 
         Cursor.lockState = CursorLockMode.Locked;
         lookAction = InputSystem.actions.FindAction("Look");
         jumpAction = InputSystem.actions.FindAction("Jump");
+        unjumpAction = InputSystem.actions.FindAction("UnJump");
         moveAction = InputSystem.actions.FindAction("Move");
         fireAction = InputSystem.actions.FindAction("Attack");
         unfireAction = InputSystem.actions.FindAction("UnAttack");
@@ -162,22 +165,19 @@ public class PlayerController : MonoBehaviour
 
     void FreeMovement()
     {
-        var moveVelocity = moveAction.ReadValue<Vector2>() * moveSpeed;
-        var yVelocity = playerBody.linearVelocity.y;
+        var moveVelocity = moveAction.ReadValue<Vector2>();
 
-        var jump = jumpAction.IsPressed() ? 3.0f : 0;
+        var jump = jumpAction.IsPressed() ? 1.0f : unjumpAction.IsPressed() ? -1.0f : 0;
+        // 2d wasd
+        // var moveVelocity3d = playerBody.transform.forward * moveVelocity.y
+        //     + playerBody.transform.right * moveVelocity.x
+        //     + playerBody.transform.up * yVelocity + playerBody.transform.up * jump;
+        // 3d wasd
+        var moveVelocity3d = verticalPivot.transform.forward * moveVelocity.y
+                    + verticalPivot.transform.right * moveVelocity.x
+                    + playerBody.transform.up * jump;
 
-
-        if (!jumpAction.IsPressed() && yVelocity > 0)
-        {
-            yVelocity *= 0.1f;
-        }
-
-        var moveVelocity3d = playerBody.transform.forward * moveVelocity.y
-            + playerBody.transform.right * moveVelocity.x
-            + playerBody.transform.up * yVelocity + playerBody.transform.up * jump;
-
-        playerBody.linearVelocity = Vector3.Lerp(playerBody.linearVelocity, moveVelocity3d, Mathf.Clamp(Time.deltaTime * 5, 0, 1));
+        playerBody.linearVelocity = Vector3.Lerp(playerBody.linearVelocity, moveVelocity3d * moveSpeed, Mathf.Clamp(Time.deltaTime * 5, 0, 1));
         var speed = playerBody.linearVelocity.magnitude;
         var direction = playerBody.linearVelocity.normalized;
         playerBody.linearVelocity = direction * Mathf.Min(speed, 5);
