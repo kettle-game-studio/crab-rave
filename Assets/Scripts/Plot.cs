@@ -105,11 +105,11 @@ public class Plot : MonoBehaviour
         }
         if (playerController.movedWithBack < 100) 
         {
-            text += $"Return using airhose on [RMB]: {(int)playerController.movedWithBack}/100m\n";
+            text += $"Return using airhose on [Hold RMB]: {(int)playerController.movedWithBack}/100m\n";
         }
         if (playerController.movedWithHook < 100) 
         {
-            text += $"Move using grappling hook on [LMB]: {(int)playerController.movedWithHook}/100m";
+            text += $"Move using grappling hook on [Hold LMB]: {(int)playerController.movedWithHook}/100m";
         }
 
         questText.text = text;
