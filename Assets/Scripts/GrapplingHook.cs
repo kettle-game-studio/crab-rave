@@ -21,6 +21,7 @@ public class GrapplingHook : MonoBehaviour
     public AudioSource catchAudio;
     public AudioSource wroomAudio;
     public AudioSource fireAudio;
+    public AudioSource grabbedAudio;
 
     public void Start()
     {
@@ -97,6 +98,7 @@ public class GrapplingHook : MonoBehaviour
         {
             player.GetShell(shell.@type);
             shell.GetRetrieved();
+            grabbedAudio.Play();
         }
         controller.GrappleFailed();
     }
