@@ -23,8 +23,10 @@ public class PlayerController : MonoBehaviour
     public Plot plot;
     public MeshRenderer[] grapplingMeshes;
 
-    InputAction jumpAction;
-    InputAction unjumpAction;
+    [HideInInspector]
+    public InputAction jumpAction;
+    [HideInInspector]
+    public InputAction unjumpAction;
     InputAction lookAction;
     InputAction moveAction;
     InputAction fireAction;
@@ -50,6 +52,22 @@ public class PlayerController : MonoBehaviour
         Firing,
         Grappling,
         Returning,
+        Disabled,
+    }
+
+    State stateStack;
+    public void MagicDisable() 
+    {
+        stateStack = state;
+        state = State.Disabled;
+        gameObject.SetActive(false);
+    }
+
+    public void MagicEnable() 
+    {
+        state = stateStack;
+        gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     State state = State.Free;
