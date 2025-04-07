@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
 
     public GrapplingHook grapplingHook;
     public TrailLine trailLine;
-
+    public AudioSource wroomForward;
+    public AudioSource wroomBackward;
     InputAction jumpAction;
     InputAction unjumpAction;
     InputAction lookAction;
@@ -112,13 +113,16 @@ public class PlayerController : MonoBehaviour
 
             if (unfireAction.IsPressed())
             {
+                if (!wroomBackward.isPlaying) wroomBackward.Play();
                 MinimizeHitbox();
                 var dir = trailLine.RollBackDirection();
                 playerBody.linearVelocity = dir * 10;
 
                 FreeLook();
                 return;
+
             }
+            else if (wroomBackward.isPlaying) wroomBackward.Stop();
 
             MaximizeHitbox();
 
@@ -141,6 +145,7 @@ public class PlayerController : MonoBehaviour
 
             if (fireAction.IsPressed())
             {
+                if (!wroomForward.isPlaying) wroomForward.Play();
                 var thisPosition = playerBody.transform.position;
                 var hookPosition = grapplingHook.TipPosition;
 
@@ -151,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
                 return;
             }
+            else if (wroomForward.isPlaying) wroomForward.Stop();
 
             MaximizeHitbox();
 

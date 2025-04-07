@@ -17,7 +17,8 @@ public class GrapplingHook : MonoBehaviour
 
     public bool IsFlying => !stopFlying;
     public Vector3 TipPosition => hookTip.transform.position;
-    public AudioSource audioSource;
+    public AudioSource catchAudio;
+    public AudioSource wroomAudio;
 
     public void Start()
     {
@@ -51,10 +52,11 @@ public class GrapplingHook : MonoBehaviour
             {
                 hookBubbles.Stop();
                 yield return FlyBack(controller);
+                wroomAudio.Stop();
                 yield break;
             }
         }
-        audioSource.Play();
+        catchAudio.Play();
         hookBubbles.Stop();
         controller.GrappleOk();
     }
@@ -68,6 +70,7 @@ public class GrapplingHook : MonoBehaviour
             totalTime = 0.5f;
         }
 
+        wroomAudio.Play();
         var time = 0f;
         while (time < totalTime)
         {
@@ -76,6 +79,7 @@ public class GrapplingHook : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+        wroomAudio.Stop();
         hookTip.SetPositionAndRotation(hookTipMount.position, hookTipMount.rotation);
         hookTip.parent = hookTipMount;
         // hookBubbles.Stop();
