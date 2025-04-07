@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public TrailLine trailLine;
     public AudioSource wroomForward;
     public AudioSource wroomBackward;
+    public AudioSource froceBackward;
     public Animator animator;
     public Plot plot;
     public MeshRenderer[] grapplingMeshes;
@@ -263,6 +264,8 @@ public class PlayerController : MonoBehaviour
 
         trailLine.moveBackFlag = true;
         state = State.Returning;
+        froceBackward.Play();
+        wroomBackward.Play();
 
         MinimizeHitbox();
 
@@ -282,6 +285,7 @@ public class PlayerController : MonoBehaviour
 
         trailLine.moveBackFlag = false;
         state = State.Free;
+        wroomBackward.Stop();
     }
 
     public void GetShell(Shell.ShellType shellType)
