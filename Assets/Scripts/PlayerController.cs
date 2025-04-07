@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public TrailLine trailLine;
     public AudioSource wroomForward;
     public AudioSource wroomBackward;
+    public Animator animator;
     public Plot plot;
     public MeshRenderer[] grapplingMeshes;
 
@@ -233,6 +234,11 @@ public class PlayerController : MonoBehaviour
         var speed = playerBody.linearVelocity.magnitude;
         var direction = playerBody.linearVelocity.normalized;
         playerBody.linearVelocity = direction * Mathf.Min(speed, 5);
+        if (speed > 0.4f)
+            animator.SetBool("IsMoving", true);
+        else 
+            animator.SetBool("IsMoving", false);
+            
     }
 
     void OnCollisionEnter(Collision collision)
