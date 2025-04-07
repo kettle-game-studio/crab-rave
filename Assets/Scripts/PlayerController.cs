@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public TrailLine trailLine;
     public AudioSource wroomForward;
     public AudioSource wroomBackward;
+    public AudioSource froceBackward;
+    public Animator animator;
     public Plot plot;
     public MeshRenderer[] grapplingMeshes;
 
@@ -176,6 +178,13 @@ public class PlayerController : MonoBehaviour
                 movedWithHook += Vector3.Distance(prevPos, newPos);
                 prevPos = newPos;
 
+                if (Vector3.Distance(grapplingHook.hookTip.position, grapplingHook.hookTipMount.position) < 1)
+                {
+                    trailLine.moveBackFlag = false;
+                    state = State.Firing;
+                    StartCoroutine(grapplingHook.FlyBack(this, 0.05f));
+                }
+
                 return;
             }
             else if (wroomForward.isPlaying) wroomForward.Stop();
@@ -233,10 +242,20 @@ public class PlayerController : MonoBehaviour
         var speed = playerBody.linearVelocity.magnitude;
         var direction = playerBody.linearVelocity.normalized;
         playerBody.linearVelocity = direction * Mathf.Min(speed, 5);
+        if (speed > 0.4f)
+            animator.SetBool("IsMoving", true);
+        else
+            animator.SetBool("IsMoving", false);
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.TryGetComponent<Shell>(out var shell))
+        {
+            GetShell(shell.@type);
+            Destroy(shell.gameObject);
+        }
+
         if (state == State.Returning)
             return;
 
@@ -257,6 +276,8 @@ public class PlayerController : MonoBehaviour
 
         trailLine.moveBackFlag = true;
         state = State.Returning;
+        froceBackward.Play();
+        wroomBackward.Play();
 
         MinimizeHitbox();
 
@@ -276,6 +297,7 @@ public class PlayerController : MonoBehaviour
 
         trailLine.moveBackFlag = false;
         state = State.Free;
+        wroomBackward.Stop();
     }
 
     public void GetShell(Shell.ShellType shellType)

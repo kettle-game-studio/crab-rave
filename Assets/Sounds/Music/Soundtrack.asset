@@ -46,11 +46,11 @@ AudioRandomContainer:
   m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
   m_LoopCountRandomizationRange: {x: 0, y: 0}
   m_Elements:
-  - {fileID: -7480354222712475620}
   - {fileID: 4971447304655413228}
   - {fileID: -9149436226262183538}
+  - {fileID: -7480354222712475620}
   m_AvoidRepeatingLast: 0
-  m_PlaybackMode: 1
+  m_PlaybackMode: 0
   m_TriggerMode: 0
   m_AutomaticTriggerMode: 1
   m_LoopMode: 0
