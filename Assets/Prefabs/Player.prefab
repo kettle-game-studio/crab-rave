@@ -6376,7 +6376,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 500
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -10751,6 +10751,7 @@ MonoBehaviour:
   shellText: {fileID: 0}
   crabText: {fileID: 0}
   questText: {fileID: 0}
+  blablaAudio: {fileID: 0}
   totalShells: 4
 --- !u!82 &8123312036655214034
 AudioSource:

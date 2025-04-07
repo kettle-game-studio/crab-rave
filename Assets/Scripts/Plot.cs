@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Plot : MonoBehaviour
     public TextMeshProUGUI shellText;
     public TextMeshProUGUI crabText;
     public TextMeshProUGUI questText;
+    public AudioSource blablaAudio;
 
     public int totalShells = 4;
 
@@ -90,8 +92,12 @@ public class Plot : MonoBehaviour
             hitWall = false;
             CrabSays("No rope left, mate, pulling you out.", 2f);
         }
-        
+
         UpdateQuestTest();
+        if (crabSays.Count > 0 && !blablaAudio.isPlaying)
+            blablaAudio.Play();
+        else if (crabSays.Count == 0 && blablaAudio.isPlaying)
+            blablaAudio.Stop();
         for (var i = 0; i < crabSays.Count;)
         {
             var time = crabSays[i].Item2 - Time.deltaTime;
