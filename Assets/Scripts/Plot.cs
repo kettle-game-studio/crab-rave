@@ -163,7 +163,7 @@ public class Plot : MonoBehaviour
 
         CrabSays("Precious little shell! It will make a fine house for some lucky crab", 5);
 
-        while (shells < 3)
+        while (shells < 4)
         {
             yield return null;
         }

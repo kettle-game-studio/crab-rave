@@ -177,6 +177,13 @@ public class PlayerController : MonoBehaviour
                 movedWithHook += Vector3.Distance(prevPos, newPos);
                 prevPos = newPos;
 
+                if (Vector3.Distance(grapplingHook.hookTip.position, grapplingHook.hookTipMount.position) < 1)
+                {
+                    trailLine.moveBackFlag = false;
+                    state = State.Firing;
+                    StartCoroutine(grapplingHook.FlyBack(this, 0.05f));
+                }
+
                 return;
             }
             else if (wroomForward.isPlaying) wroomForward.Stop();
@@ -238,7 +245,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsMoving", true);
         else
             animator.SetBool("IsMoving", false);
-
     }
 
     void OnCollisionEnter(Collision collision)
