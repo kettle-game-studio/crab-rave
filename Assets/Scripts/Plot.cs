@@ -71,6 +71,12 @@ public class Plot : MonoBehaviour
         crabText.text = txt.ToString();
     }
 
+    bool hitWall = false;
+    public void HitWall()
+    {
+        hitWall = true;
+    }
+
     void Start()
     {
         SetShellText();
@@ -79,6 +85,12 @@ public class Plot : MonoBehaviour
 
     void Update()
     {
+        if (hitWall)
+        {
+            hitWall = false;
+            CrabSays("No rope left, mate, pulling you out.", 2f);
+        }
+        
         UpdateQuestTest();
         for (var i = 0; i < crabSays.Count;)
         {
@@ -99,15 +111,15 @@ public class Plot : MonoBehaviour
     void UpdateQuestTest()
     {
         var text = "";
-        if (playerController.movedWithWasd < 100) 
+        if (playerController.movedWithWasd < 100)
         {
             text += $"Swim on [Mouse/WASD/Space/Shift]: {(int)playerController.movedWithWasd}/100m\n";
         }
-        if (playerController.movedWithBack < 100) 
+        if (playerController.movedWithBack < 100)
         {
             text += $"Return using airhose on [Hold RMB]: {(int)playerController.movedWithBack}/100m\n";
         }
-        if (playerController.movedWithHook < 100) 
+        if (playerController.movedWithHook < 100)
         {
             text += $"Move using grappling hook on [Hold LMB]: {(int)playerController.movedWithHook}/100m";
         }
