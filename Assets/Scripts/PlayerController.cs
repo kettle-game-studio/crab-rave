@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     public TrailLine trailLine;
     public AudioSource wroomForward;
     public AudioSource wroomBackward;
+    public Plot plot;
+    public MeshRenderer[] grapplingMeshes;
+
     InputAction jumpAction;
     InputAction unjumpAction;
     InputAction lookAction;
@@ -31,6 +34,15 @@ public class PlayerController : MonoBehaviour
     float rotationHorizontal;
     float rotationVertical;
     int worldBoundLayerMask;
+    bool grapplingHookAllowed = true;
+    Vector3 prevPos;
+
+    [HideInInspector]
+    public float movedWithHook;
+    [HideInInspector]
+    public float movedWithBack;
+    [HideInInspector]
+    public float movedWithWasd;
 
     enum State
     {
@@ -75,6 +87,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        prevPos = transform.position;
+        AllowGrapplingHook(false);
         Application.targetFrameRate = 60;
         worldBoundLayerMask = 1 << LayerMask.NameToLayer("WorldBounds");
 
@@ -118,6 +132,10 @@ public class PlayerController : MonoBehaviour
                 var dir = trailLine.RollBackDirection();
                 playerBody.linearVelocity = dir * 10;
 
+                var newPos = transform.position;
+                movedWithBack += Vector3.Distance(prevPos, newPos);
+                prevPos = newPos;
+
                 FreeLook();
                 return;
 
@@ -126,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
             MaximizeHitbox();
 
-            if (fireAction.IsPressed())
+            if (fireAction.IsPressed() && grapplingHookAllowed)
             {
                 state = State.Firing;
                 trailLine.moveBackFlag = false;
@@ -153,6 +171,10 @@ public class PlayerController : MonoBehaviour
 
                 MinimizeHitbox();
                 playerBody.AddForce((hookPosition - thisPosition).normalized * grapplingForce + additionalForce);
+
+                var newPos = transform.position;
+                movedWithHook += Vector3.Distance(prevPos, newPos);
+                prevPos = newPos;
 
                 return;
             }
@@ -191,6 +213,10 @@ public class PlayerController : MonoBehaviour
 
     void FreeMovement()
     {
+        var newPos = transform.position;
+        movedWithWasd += Vector3.Distance(prevPos, newPos);
+        prevPos = newPos;
+
         var moveVelocity = moveAction.ReadValue<Vector2>();
 
         var jump = jumpAction.IsPressed() ? 1.0f : unjumpAction.IsPressed() ? -1.0f : 0;
@@ -239,6 +265,10 @@ public class PlayerController : MonoBehaviour
             var dir = trailLine.RollBackDirection();
             playerBody.linearVelocity = dir * 10;
 
+            var newPos = transform.position;
+            movedWithBack += Vector3.Distance(prevPos, newPos);
+            prevPos = newPos;
+
             FreeLook();
             yield return null;
         }
@@ -250,6 +280,16 @@ public class PlayerController : MonoBehaviour
 
     public void GetShell(Shell.ShellType shellType)
     {
-        Debug.Log($"Player.GetShell({shellType})");
+        plot.ShellCollected(shellType);
+        // Debug.Log($"Player.GetShell({shellType})");
+    }
+
+    public void AllowGrapplingHook(bool allow = true)
+    {
+        grapplingHookAllowed = allow;
+        foreach (var mesh in grapplingMeshes)
+        {
+            mesh.enabled = allow;
+        }
     }
 }

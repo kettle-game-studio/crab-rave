@@ -66,7 +66,6 @@ public class TrailLine : MonoBehaviour
     int countFrames = 0;
     void RopeGarbageCollector()
     {
-        // countFrames++;
         if (positions.Count < 3)
         {
             return;
@@ -96,8 +95,9 @@ public class TrailLine : MonoBehaviour
             positions[i - 1] += vm;
         }
 
-        // if (countFrames < 10) return;
-        // countFrames = 0;
+        countFrames++;
+        if (countFrames < 10) return;
+        countFrames = 0;
 
         var newPositions = new List<Vector3>();
         var pPrev = positions[0];
