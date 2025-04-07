@@ -185,12 +185,10 @@ public class PlayerController : MonoBehaviour
 
                 return;
             }
-            else if (wroomForward.isPlaying) wroomForward.Stop();
-
-            MaximizeHitbox();
-
-            if (unfireAction.IsPressed())
+            else
             {
+                if (wroomForward.isPlaying) wroomForward.Stop();
+                MaximizeHitbox();
                 trailLine.moveBackFlag = false;
                 state = State.Firing;
                 StartCoroutine(grapplingHook.FlyBack(this));
