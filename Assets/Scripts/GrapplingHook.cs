@@ -98,6 +98,7 @@ public class GrapplingHook : MonoBehaviour
             return;
         }
 
+        catchAudio.Play();
         this.shell = shell;
         shell.GetGrabbed(hookTip, player.GetComponent<PlayerController>());
     }
