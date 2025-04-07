@@ -14,6 +14,7 @@ public class GrapplingHook : MonoBehaviour
 
     public bool IsFlying => !stopFlying;
     public Vector3 TipPosition => hookTip.transform.position;
+    public AudioSource audioSource;
 
     public void Start()
     {
@@ -48,7 +49,7 @@ public class GrapplingHook : MonoBehaviour
                 yield break;
             }
         }
-
+        audioSource.Play();
         controller.GrappleOk();
     }
 
