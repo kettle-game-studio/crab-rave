@@ -549,8 +549,8 @@ MonoBehaviour:
 
     [Translation]: '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 61c678973225a9c4dbc422773b135986, type: 2}
-  m_sharedMaterial: {fileID: 5941387166215390625, guid: 61c678973225a9c4dbc422773b135986, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d5ca761c48eee024f9fa02dadc20e371, type: 2}
+  m_sharedMaterial: {fileID: 2499765479606147675, guid: d5ca761c48eee024f9fa02dadc20e371, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1506,8 +1506,8 @@ MonoBehaviour:
 
     Shells: <count>'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 61c678973225a9c4dbc422773b135986, type: 2}
-  m_sharedMaterial: {fileID: 5941387166215390625, guid: 61c678973225a9c4dbc422773b135986, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d5ca761c48eee024f9fa02dadc20e371, type: 2}
+  m_sharedMaterial: {fileID: 2499765479606147675, guid: d5ca761c48eee024f9fa02dadc20e371, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2489,8 +2489,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Quest: do something'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 61c678973225a9c4dbc422773b135986, type: 2}
-  m_sharedMaterial: {fileID: 5941387166215390625, guid: 61c678973225a9c4dbc422773b135986, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d5ca761c48eee024f9fa02dadc20e371, type: 2}
+  m_sharedMaterial: {fileID: 2499765479606147675, guid: d5ca761c48eee024f9fa02dadc20e371, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -236,13 +236,19 @@ public class PlayerController : MonoBehaviour
         playerBody.linearVelocity = direction * Mathf.Min(speed, 5);
         if (speed > 0.4f)
             animator.SetBool("IsMoving", true);
-        else 
+        else
             animator.SetBool("IsMoving", false);
-            
+
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.TryGetComponent<Shell>(out var shell))
+        {
+            GetShell(shell.@type);
+            Destroy(shell.gameObject);
+        }
+
         if (state == State.Returning)
             return;
 
