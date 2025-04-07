@@ -127,6 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spline: {fileID: 8527074014985138789}
   count: 20
-  walker: {fileID: 919132149155446097, guid: 9569fe6c47849aa45ad4ef89b12376fa, type: 3}
+  walker: {fileID: 3431504674515258916, guid: f2e1489d3283940478b19e3f79e26a35, type: 3}
   speed: 0.1
-  scale: 5
+  scale: 2
