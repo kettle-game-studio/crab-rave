@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         Free,
         Firing,
         Grappling,
+        Returning,
     }
 
     State state = State.Free;
@@ -183,9 +185,40 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if ((worldBoundLayerMask | collision.collider.gameObject.layer) == 0)
+        if (state == State.Returning)
             return;
 
-            Debug.Log("Can't");
+        if ((worldBoundLayerMask & (1 << collision.collider.gameObject.layer)) == 0)
+            return;
+
+        Debug.Log($"Cant due to {collision.collider.gameObject.name} ({collision.collider.gameObject.layer}), worldBoundLayerMask = {worldBoundLayerMask}, ");
+        StartCoroutine(WorldEndCoroutine());
+    }
+
+    IEnumerator WorldEndCoroutine()
+    {
+        Debug.Log($"{state}");
+        if (state == State.Grappling)
+        {
+            StartCoroutine(grapplingHook.FlyBack(this, 0.02f));
+        }
+
+        trailLine.moveBackFlag = true;
+        state = State.Returning;
+
+        MinimizeHitbox();
+
+        for (var i = 0; i < 20; i++)
+        {
+            var dir = trailLine.RollBackDirection();
+            playerBody.linearVelocity = dir * 10;
+
+            FreeLook();
+            yield return null;
+        }
+
+
+        trailLine.moveBackFlag = false;
+        state = State.Free;
     }
 }
