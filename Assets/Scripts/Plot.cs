@@ -71,12 +71,6 @@ public class Plot : MonoBehaviour
         crabText.text = txt.ToString();
     }
 
-    int wallHits = 0;
-    public void HitTheWall()
-    {
-        wallHits++;
-    }
-
     void Start()
     {
         SetShellText();
@@ -111,11 +105,11 @@ public class Plot : MonoBehaviour
         }
         if (playerController.movedWithBack < 100) 
         {
-            text += $"Return using airhose on [RMB]: {(int)playerController.movedWithBack}/100m\n";
+            text += $"Return using airhose on [Hold RMB]: {(int)playerController.movedWithBack}/100m\n";
         }
         if (playerController.movedWithHook < 100) 
         {
-            text += $"Move using grappling hook on [LMB]: {(int)playerController.movedWithHook}/100m";
+            text += $"Move using grappling hook on [Hold LMB]: {(int)playerController.movedWithHook}/100m";
         }
 
         questText.text = text;
@@ -155,10 +149,25 @@ public class Plot : MonoBehaviour
 
         CrabSays("Now, with the full length, go find us some shells!", 5);
 
-
-        while (true)
+        while (shells < 2)
         {
             yield return null;
         }
+
+        CrabSays("Good find! I think, there are only two left", 5);
+
+        while (shells < 3)
+        {
+            yield return null;
+        }
+
+        CrabSays("Precious little shell! It will make a fine house for some lucky crab", 5);
+
+        while (shells < 3)
+        {
+            yield return null;
+        }
+
+        CrabSays("Kkkk! You've found all the shells, you lucky bastard", 5);
     }
 }
