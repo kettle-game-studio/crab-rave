@@ -162,9 +162,9 @@ public class Plot : MonoBehaviour
 
     IEnumerator PlotCoroutine()
     {
-        Debug.Log($"{0:X} {255:X}");
+        // Debug.Log($"{0:X} {255:X}");
 
-        CrabSays("Friend, we are stranded here together. I will hold the air hose, and you will collect rare sea shells.", 5);
+        CrabSays("Friend, we are stranded here together. I will hold the air hose, and you will collect rare sea shells.", 10);
 
         yield return new WaitForSeconds(5f);
 
