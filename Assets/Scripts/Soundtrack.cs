@@ -13,6 +13,7 @@ public class Soundtrack : MonoBehaviour
 
         source.resource = tracks[idx];
         source.Play();
-        idx++;
+
+        idx = (idx + 1) % tracks.Length;
     }
 }
