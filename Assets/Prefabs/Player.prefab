@@ -10491,6 +10491,24 @@ MonoBehaviour:
   grapplingMeshes:
   - {fileID: 1016980515911325541}
   - {fileID: 4433383476064873640}
+  jumpAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c51fd36b-93fa-47a3-829c-1d1fe1a98e56
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  unjumpAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 51c815e9-8cde-42c6-b89b-948aa9cff8ca
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   movedWithHook: 0
   movedWithBack: 0
   movedWithWasd: 0
@@ -10752,7 +10770,11 @@ MonoBehaviour:
   crabText: {fileID: 0}
   questText: {fileID: 0}
   blablaAudio: {fileID: 0}
-  totalShells: 4
+  credits: {fileID: 0}
+  shells: 0
+  gems: 0
+  totalShells: 0
+  totalGems: 0
 --- !u!82 &8123312036655214034
 AudioSource:
   m_ObjectHideFlags: 0

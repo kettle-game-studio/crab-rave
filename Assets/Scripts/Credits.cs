@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Credits : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Credits : MonoBehaviour
     public Camera creditsCamera;
     public TextMeshProUGUI pressSpace;
     public TextMeshProUGUI credits;
+    public Image pointInTheMiddle;
 
     bool isGoing;
 
@@ -33,6 +35,7 @@ public class Credits : MonoBehaviour
             plot.ReturnText();
             pressSpace.enabled = false;
             credits.enabled = false;
+            pointInTheMiddle.enabled = true;
         }
     }
 
@@ -41,6 +44,7 @@ public class Credits : MonoBehaviour
         if (isGoing) return;
         isGoing = true;
 
+        pointInTheMiddle.enabled = false;
         pressSpace.enabled = true;
         credits.enabled = true;
         plot.RemoveText();
@@ -55,23 +59,23 @@ public class Credits : MonoBehaviour
 
         You have swum:
         
-        - {(int)playerController.movedWithWasd} meters with your crab-legs;
-        - {(int)playerController.movedWithHook} meters with your grappling hook;
-        - {(int)playerController.movedWithBack} meters rewinding the air hose;
+        {(int)playerController.movedWithWasd} meters with your crab-legs;
+        {(int)playerController.movedWithHook} meters with your grappling hook;
+        {(int)playerController.movedWithBack} meters rewinding the air hose;
 
         You have collected:
 
-        - {plot.shells}/{plot.totalShells} Shells;
-        - {plot.gems}/{plot.totalGems} Gems;
+        {plot.shells}/{plot.totalShells} Shells;
+        {plot.gems}/{plot.totalGems} Gems;
 
         CREDITS:
 
-        - Oleg Arutyunov
-        - Nicole Akopdzhanova
-        - Sergey Duyunov
-        - Viacheslav Ivanchenko
-        - Adam Arutyunov
-        - Tigran Mamedov
+        Oleg Arutyunov
+        Nicole Akopdzhanova
+        Sergey Duyunov
+        Viacheslav Ivanchenko
+        Adam Arutyunov
+        Tigran Mamedov
         ";
     }
 }
