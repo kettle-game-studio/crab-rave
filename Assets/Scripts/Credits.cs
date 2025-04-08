@@ -20,13 +20,15 @@ public class Credits : MonoBehaviour
         credits.enabled = false;
     }
 
+    float timeOfCredits = 2f;
     void Update()
     {
         if (!isGoing) return;
 
         credits.transform.position += new Vector3(0, 50 * Time.deltaTime, 0);
+        timeOfCredits -= Time.deltaTime;
 
-        if (playerController.jumpAction.IsPressed())
+        if (timeOfCredits <= 0 && playerController.jumpAction.IsPressed())
         {
             Debug.Log("Enable");
             playerController.MagicEnable();
