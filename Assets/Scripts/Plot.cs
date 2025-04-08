@@ -168,7 +168,6 @@ public class Plot : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
 
-        credits.StartCredits();
         CrabSays("The hose has limited length though, i will roll it back a little if you are close to the end.", 5);
 
         yield return new WaitForSeconds(5f);
