@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource wroomForward;
     public AudioSource wroomBackward;
     public AudioSource froceBackward;
+    public AudioSource grabbedAudio;
     public Animator animator;
     public Plot plot;
     public MeshRenderer[] grapplingMeshes;
@@ -56,14 +57,14 @@ public class PlayerController : MonoBehaviour
     }
 
     State stateStack;
-    public void MagicDisable() 
+    public void MagicDisable()
     {
         stateStack = state;
         state = State.Disabled;
         gameObject.SetActive(false);
     }
 
-    public void MagicEnable() 
+    public void MagicEnable()
     {
         state = stateStack;
         gameObject.SetActive(true);
@@ -317,6 +318,7 @@ public class PlayerController : MonoBehaviour
 
     public void GetShell(Shell.ShellType shellType)
     {
+        grabbedAudio.Play();
         plot.ShellCollected(shellType);
         // Debug.Log($"Player.GetShell({shellType})");
     }
