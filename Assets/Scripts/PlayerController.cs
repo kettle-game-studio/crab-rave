@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
     State stateStack;
     public void MagicDisable()
     {
+        if (wroomForward.isPlaying) wroomForward.Stop();
+        if (wroomBackward.isPlaying) wroomBackward.Stop();
         stateStack = state;
         state = State.Disabled;
         gameObject.SetActive(false);
@@ -66,8 +68,9 @@ public class PlayerController : MonoBehaviour
 
     public void MagicEnable()
     {
-        state = stateStack;
+        state = State.Free;
         gameObject.SetActive(true);
+        StartCoroutine(grapplingHook.FlyBack(this, 0.05f));
         Cursor.lockState = CursorLockMode.Locked;
     }
 
